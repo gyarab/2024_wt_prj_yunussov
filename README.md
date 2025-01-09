@@ -9,3 +9,5 @@ Tento projekt zahrnuje databáze fotbalových týmů, hráčů a zápasů. Každ
 Na homepage se nachází přehled zápasů, který lze filtrovat (podle týmů) a řadit (dle data nebo skóre). Přehled tvoří kartičky, na kterých se zobrazuje datum, týmy a výsledek.
 
 Hlavní menu obsahuje odkaz na homepage (přehled zápasů), seznam týmů a seznam hráčů.
+
+![Wireframe img](Wireframe-stats.jpeg)
