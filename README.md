@@ -10,4 +10,6 @@ Na homepage se nachází přehled zápasů, který lze filtrovat (podle týmů) 
 
 Hlavní menu obsahuje odkaz na homepage (přehled zápasů), seznam týmů a seznam hráčů.
 
+## Wireframe
+
 ![Wireframe img](Wireframe-stats.jpeg)
