@@ -13,3 +13,7 @@ Hlavní menu obsahuje odkaz na homepage (přehled zápasů), seznam týmů a sez
 ## Wireframe
 
 ![Wireframe img](Wireframe-stats.jpeg)
+
+## Databázová struktura
+
+![DB structure img](DB footstats.png)
