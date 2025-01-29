@@ -16,4 +16,4 @@ Hlavní menu obsahuje odkaz na homepage (přehled zápasů), seznam týmů a sez
 
 ## Databázová struktura
 
-![DB structure img](DB footstats.png)
+![DB structure img](DB-footstats.png)
