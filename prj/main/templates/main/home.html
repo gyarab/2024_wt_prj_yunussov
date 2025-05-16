@@ -1,8 +1,54 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h1>Home Page {{svatek}}</h1>
-<p>Lorem ipsum ...</p>
+
+    <div class="row">
+        <form method="get" action="./">
+        <div class="input-group mb-3">
+            <input
+            type="text"
+            name="search"
+            value="{{ request.GET.search }}"
+            class="form-control"
+            placeholder="..."
+            aria-label="Hledat"
+            aria-describedby="button-addon2"
+            >
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Hledat</button>
+        </div>
+        </form>
+    </div>
+
+    <div class="row row-cols-1  row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-2">
+        {% for movie in movies %}
+            <div class="col">
+                <div class="card h-100" style="cursor: pointer;">
+                    <img class="card-img-top" src="{% if movie.main_picture %}{{movie.main_picture}}{% else %}//place-hold.it/200x250/{% endif %}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{movie.name}} ({{ movie.year}})</h5>
+                        {% if movie.director %}<h6>{{ movie.director}}</h6>{% endif %}
+                        
+                        {% for genre in movie.genres.all %}
+                        <span class="badge bg-primary">{{genre.name}}</span>
+                        {% endfor %}
+        
+                        <p class="card-text ">{{ movie.description|truncatewords_html:10 }}</p>
+                    </div>
+                    <div class="card-footer text-end">
+                        <a href="{% url 'movie' movie.id %}" class="btn btn-outline-primary">Detaily</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>
+              No movies found.😢
+            </p>
+        {% endfor %}
+        </div>
+
+<h1>{{h1_title}}</h1>
+
+<!-- <p>Lorem ipsum ...</p> -->
 {% for movie in movies %}
     {{ movie.title }}<br>
 {% endfor %}

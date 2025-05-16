@@ -2,15 +2,13 @@ from django.shortcuts import render
 
 def get_homepage(request):
     context = {
-        "svatek": "Libor",
-        "title": "Pulp Fiction",
+        "h1_title": "Main matches",
         "movies": [
-                {
-                 "title": "Django unchained"
-                },
-                {
-                 "title": "Teletubies"
-                }
+                { "title": "Arsenal vs Manchester United" },
+                { "title": "Chelsea vs Liverpool" },
+                { "title": "Manchester City vs Arsenal" },
+                { "title": "Barcelona vs Real Madrid (El Clásico)" },
+                { "title": "Liverpool vs Manchester United" },
             ]
     }
     return render(
