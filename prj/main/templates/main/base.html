@@ -24,87 +24,93 @@
         })();
     </script>
     <style>
-        /* Light mode */
+        /* Base styles with transitions */
         body {
             background-color: #f8f9fa;
             color: #212529;
             transition: background-color 0.4s, color 0.4s;
         }
 
-        body:not(.dark-mode) .table {
-            color: #212529;
-            background-color: #fff;
+        .navbar,
+        .navbar-light,
+        .card,
+        .form-control,
+        .table,
+        .bg-light {
+            transition: background-color 0.4s, color 0.4s, border-color 0.4s;
         }
 
-        body:not(.dark-mode) .table-light {
-            background-color: #f8f9fa;
+        /* Override Bootstrap light backgrounds */
+        html.dark-mode .bg-light,
+        html.dark-mode .navbar-light,
+        html.dark-mode .table-light,
+        html.dark-mode thead,
+        html.dark-mode tbody tr:nth-of-type(odd) {
+            background-color: #23272b !important;
+            color: #e0e0e0;
         }
 
-        /* Dark mode overrides */
-        body.dark-mode {
+        /* Dark mode */
+        html.dark-mode body {
             background-color: #181a1b;
             color: #e0e0e0;
-        }       
-         /* Dark mode - components */
-        .dark-mode .navbar,
-        .dark-mode .navbar-light,
-        .dark-mode .card {
+        }
+
+        html.dark-mode .navbar,
+        html.dark-mode .navbar-light,
+        html.dark-mode .card {
             background-color: #23272b !important;
             color: #e0e0e0;
         }
-        
-        .dark-mode .form-control {
+
+        html.dark-mode .form-control {
             background-color: #2c3238 !important;
             color: #e0e0e0;
-        }
-        
-        /* Dark mode - mobile search container */
-        .dark-mode .d-lg-none.bg-light {
-            background-color: #23272b !important;
+            border-color: #444;
         }
 
-        .dark-mode .navbar .nav-link,
-        .dark-mode .navbar .navbar-brand {
+        html.dark-mode tbody tr:nth-of-type(even),
+        html.dark-mode .table {
+            background-color: #181a1b !important;
             color: #e0e0e0;
         }
 
-        .dark-mode .navbar-brand img {
+        /* Navigation elements */
+        html.dark-mode .navbar .nav-link,
+        html.dark-mode .navbar .navbar-brand {
+            color: #e0e0e0;
+        }
+
+        html.dark-mode .navbar-brand img {
             filter: brightness(0) invert(1);
         }
 
-        .dark-mode .btn-outline-primary,
-        .dark-mode .btn-outline-success,
-        .dark-mode .btn-outline-secondary {
+        /* Buttons */
+        html.dark-mode .btn-outline-primary,
+        html.dark-mode .btn-outline-success,
+        html.dark-mode .btn-outline-secondary {
             color: #e0e0e0;
             border-color: #e0e0e0;
         }
 
-        .dark-mode .form-control {
-            border-color: #444;
-        }
-
-        .dark-mode .table {
-            color: #e0e0e0;
-            background-color: #181a1b;
-        }
-
-        /* Utility classes */
+        /* Toggler button */
         .navbar-toggler.custom-toggler {
             border: 1.5px solid #212529;
             border-radius: 0.4rem;
             height: 38px;
+            transition: border-color 0.4s;
         }
 
-        .dark-mode .navbar-toggler.custom-toggler {
-            border-color: #e0e0e0 !important;
+        html.dark-mode .navbar-toggler.custom-toggler {
+            border-color: #e0e0e0;
             color: #e0e0e0;
         }
 
-        .dark-mode .navbar-toggler-icon {
+        html.dark-mode .navbar-toggler-icon {
             filter: brightness(0) invert(1);
         }
 
-        @media (max-width: 540px) {
+        @media (max-width: 576px) {
             .navbar .container,
             .container-fluid {
                 padding-left: 0.5rem !important;
@@ -112,7 +118,7 @@
             }
         }
 
-        @media (min-width: 960px) {
+        @media (min-width: 992px) {
             .navbar-toggler.d-lg-none {
                 display: none !important;
             }
@@ -145,13 +151,15 @@
                     aria-label="Toggle navigation" style="height: 38px; border-width: 1.5px; border-color: #6c757d;">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            </div>            <div class="collapse navbar-collapse" id="navbarNav">
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ps-3">
                     <li class="nav-item"><a class="nav-link" href="{%url 'home'%}">Matches</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'team_stats' %}">Stats</a></li>
                     <li class="nav-item"><a class="nav-link" href="{%url 'teams_list'%}">Teams</a></li>
                 </ul>
-                <div class="d-none d-lg-flex flex-grow-1 align-items-center gap-2 ms-lg-2">                    <form class="d-flex flex-grow-1" role="search" id="searchForm" onsubmit="event.preventDefault();">
+                <div class="d-none d-lg-flex flex-grow-1 align-items-center gap-2 ms-lg-2">
+                    <form class="d-flex flex-grow-1" role="search" id="searchForm" onsubmit="event.preventDefault();">
                         <input class="form-control me-2 flex-grow-1" id="searchInput" name="q" type="search"
                             placeholder="Search teams or matches" aria-label="Search"
                             value="{{ search_query|default:'' }}" style="min-width: 180px; max-width: 320px;">
@@ -161,7 +169,8 @@
         </div>
     </nav>
     <!-- Mobile search bar, always visible -->
-    <div class="d-lg-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">        <form class="d-flex" role="search" id="mobileSearchForm" onsubmit="event.preventDefault();">
+    <div class="d-lg-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">
+        <form class="d-flex" role="search" id="mobileSearchForm" onsubmit="event.preventDefault();">
             <input class="form-control me-2 flex-grow-1" id="mobileSearchInput" name="q" type="search"
                 placeholder="Search teams or matches" aria-label="Search" value="{{ search_query|default:'' }}">
         </form>
@@ -178,8 +187,8 @@
         // Dark mode functionality
         const toggle = document.getElementById('darkModeToggle');
         const icon = document.getElementById('darkModeIcon');
-
         function setDarkMode(enabled) {
+            document.documentElement.classList.toggle('dark-mode', enabled);
             document.body.classList.toggle('dark-mode', enabled);
             icon.className = enabled ? 'bi bi-brightness-high' : 'bi bi-moon';
             localStorage.setItem('darkMode', enabled ? '1' : '0');
@@ -192,7 +201,7 @@
 
         const searchInput = document.getElementById('searchInput');
         const mobileSearchInput = document.getElementById('mobileSearchInput');
-        let searchTimeout = null;        function handleSearch(query) {
+        let searchTimeout = null; function handleSearch(query) {
             const params = new URLSearchParams(window.location.search);
             const activeElement = document.activeElement;
             const isMobileSearch = activeElement === mobileSearchInput;
@@ -222,7 +231,7 @@
                 // Otherwise go/stay on home page
                 window.location.href = "{% url 'home' %}" + (params.toString() ? '?' + params.toString() : '');
             }
-        }        function setupSearchInput(input) {
+        } function setupSearchInput(input) {
             if (!input) return;
 
             input.addEventListener('input', function () {
@@ -231,7 +240,7 @@
                     handleSearch(this.value);
                 }, 500);
             });
-            input.addEventListener('keydown', function(e) {
+            input.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
                     this.blur();
                 }
@@ -297,7 +306,7 @@
                 this.blur();
             }
         }
-        
+
         // Add escape key handlers to both search inputs
         if (searchInput) searchInput.addEventListener('keydown', handleEscapeKey);
         if (mobileSearchInput) mobileSearchInput.addEventListener('keydown', handleEscapeKey);

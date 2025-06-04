@@ -1,38 +1,55 @@
 {% extends 'main/base.html' %}
 {% block content %}
-<h1 class="mb-4">League Table</h1>
-<div class="table-responsive">
-<table class="table align-middle">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Team</th>
-            <th scope="col">MP</th>
-            <th scope="col">W</th>
-            <th scope="col">D</th>
-            <th scope="col">L</th>
-            <th scope="col">GF</th>
-            <th scope="col">GA</th>
-            <th scope="col">GD</th>
-            <th scope="col">Pts</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in stats %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ row.team.name }}</td>
-            <td>{{ row.played }}</td>
-            <td>{{ row.wins }}</td>
-            <td>{{ row.draws }}</td>
-            <td>{{ row.losses }}</td>
-            <td>{{ row.goals_for }}</td>
-            <td>{{ row.goals_against }}</td>
-            <td>{% if row.goal_diff > 0 %}+{% endif %}{{ row.goal_diff }}</td>
-            <td><strong>{{ row.points }}</strong></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-</div>
-{% endblock %}
+<div class="px-2 px-md-4">
+    <h1 class="mb-4">League Table</h1>
+    <div class="table-responsive">
+        <style>
+            @media (min-width: 576px) {
+                .table-responsive {
+                    margin-right: 1rem;
+                }
+            }
+            @media (min-width: 992px) {
+                .table-responsive {
+                    margin-right: 2rem;
+                }
+            }
+            @media (min-width: 1400px) {
+                .table-responsive {
+                    margin-right: 4rem;
+                }
+            }
+        </style>
+        <table class="table table-borderless align-middle">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-end">#</th>
+                    <th scope="col">Team</th>
+                    <th scope="col" class="text-end">MP</th>
+                    <th scope="col" class="text-end">W</th>
+                    <th scope="col" class="text-end">D</th>
+                    <th scope="col" class="text-end">L</th>
+                    <th scope="col" class="text-end">GF</th>
+                    <th scope="col" class="text-end">GA</th>
+                    <th scope="col" class="text-end">GD</th>
+                    <th scope="col" class="text-end">Pts</th>
+                </tr>
+            </thead>
+            <tbody> {% for row in stats %}
+                <tr class="py-2">
+                    <th scope="row" class="text-end">{{ forloop.counter }}</th>
+                    <td>{{ row.team.name }}</td>
+                    <td class="text-end">{{ row.played }}</td>
+                    <td class="text-end">{{ row.wins }}</td>
+                    <td class="text-end">{{ row.draws }}</td>
+                    <td class="text-end">{{ row.losses }}</td>
+                    <td class="text-end">{{ row.goals_for }}</td>
+                    <td class="text-end">{{ row.goals_against }}</td>
+                    <td class="text-end">{% if row.goal_diff > 0 %}+{% endif %}{{ row.goal_diff }}</td>
+                    <td class="text-end"><strong>{{ row.points }}</strong></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}

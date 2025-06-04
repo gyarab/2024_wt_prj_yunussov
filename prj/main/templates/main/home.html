@@ -95,6 +95,7 @@
 </div>
 {% endif %}
 
+{% if past_matches %}
 <h3>Past Matches</h3>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
     {% for match in past_matches %}
@@ -124,9 +125,8 @@
             </div>
         </div>
     </div>
-    {% empty %}
-    <p>No past matches found.</p>
     {% endfor %}
 </div>
+{% endif %}
 
 {% endblock %}
