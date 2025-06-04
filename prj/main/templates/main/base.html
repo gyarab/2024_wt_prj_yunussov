@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Stats</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <meta name="color-scheme" content="dark light">
+    <script>
+        (function () {
+            try {
+                var darkPref = localStorage.getItem('darkMode');
+                if (darkPref === null) {
+                    darkPref = '1';
+                    localStorage.setItem('darkMode', '1');
+                }
+                if (darkPref === '1') {
+                    document.documentElement.classList.add('dark-mode');
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) { }
+        })();
+    </script>
+    <style>
+        /* Light mode */
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            transition: background-color 0.4s, color 0.4s;
+        }
+
+        body:not(.dark-mode) .table {
+            color: #212529;
+            background-color: #fff;
+        }
+
+        body:not(.dark-mode) .table-light {
+            background-color: #f8f9fa;
+        }
+
+        /* Dark mode overrides */
+        body.dark-mode {
+            background-color: #181a1b;
+            color: #e0e0e0;
+        }       
+         /* Dark mode - components */
+        .dark-mode .navbar,
+        .dark-mode .navbar-light,
+        .dark-mode .card {
+            background-color: #23272b !important;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .form-control {
+            background-color: #2c3238 !important;
+            color: #e0e0e0;
+        }
+        
+        /* Dark mode - mobile search container */
+        .dark-mode .d-lg-none.bg-light {
+            background-color: #23272b !important;
+        }
+
+        .dark-mode .navbar .nav-link,
+        .dark-mode .navbar .navbar-brand {
+            color: #e0e0e0;
+        }
+
+        .dark-mode .navbar-brand img {
+            filter: brightness(0) invert(1);
+        }
+
+        .dark-mode .btn-outline-primary,
+        .dark-mode .btn-outline-success,
+        .dark-mode .btn-outline-secondary {
+            color: #e0e0e0;
+            border-color: #e0e0e0;
+        }
+
+        .dark-mode .form-control {
+            border-color: #444;
+        }
+
+        .dark-mode .table {
+            color: #e0e0e0;
+            background-color: #181a1b;
+        }
+
+        /* Utility classes */
+        .navbar-toggler.custom-toggler {
+            border: 1.5px solid #212529;
+            border-radius: 0.4rem;
+            height: 38px;
+        }
+
+        .dark-mode .navbar-toggler.custom-toggler {
+            border-color: #e0e0e0 !important;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .navbar-toggler-icon {
+            filter: brightness(0) invert(1);
+        }
+
+        @media (max-width: 540px) {
+            .navbar .container,
+            .container-fluid {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+        }
+
+        @media (min-width: 960px) {
+            .navbar-toggler.d-lg-none {
+                display: none !important;
+            }
+
+            #darkModeToggle {
+                position: static !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light position-relative">
+        <div class="container-fluid px-2 px-md-3" style="justify-content: flex-start;">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}"
+                style="margin-right: 1.2rem;">
+                <img src="{% static 'main/football.svg' %}" alt="Logo" style="height:32px;vertical-align:middle;"> <span
+                    style="font-weight: 600;">FootStats</span>
+            </a>
+            <!-- Always-visible dark mode toggle left of hamburger menu -->
+            <div class="position-absolute top-0 end-0 m-2"
+                style="z-index: 1052; display: flex; flex-direction: row; gap: 0.5rem; align-items: center;">
+                <button id="darkModeToggle" class="navbar-toggler custom-toggler" type="button"
+                    aria-label="Toggle dark mode"
+                    style="height: 38px; width: 42px; display: flex; align-items: center; justify-content: center;">
+                    <span id="darkModeIcon" class="bi bi-moon"></span>
+                </button>
+                <button class="navbar-toggler custom-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation" style="height: 38px; border-width: 1.5px; border-color: #6c757d;">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ps-3">
+                    <li class="nav-item"><a class="nav-link" href="{%url 'home'%}">Matches</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'team_stats' %}">Stats</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'teams_list'%}">Teams</a></li>
+                </ul>
+                <div class="d-none d-lg-flex flex-grow-1 align-items-center gap-2 ms-lg-2">                    <form class="d-flex flex-grow-1" role="search" id="searchForm" onsubmit="event.preventDefault();">
+                        <input class="form-control me-2 flex-grow-1" id="searchInput" name="q" type="search"
+                            placeholder="Search teams or matches" aria-label="Search"
+                            value="{{ search_query|default:'' }}" style="min-width: 180px; max-width: 320px;">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Mobile search bar, always visible -->
+    <div class="d-lg-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">        <form class="d-flex" role="search" id="mobileSearchForm" onsubmit="event.preventDefault();">
+            <input class="form-control me-2 flex-grow-1" id="mobileSearchInput" name="q" type="search"
+                placeholder="Search teams or matches" aria-label="Search" value="{{ search_query|default:'' }}">
+        </form>
+    </div>
+
+    <div class="container-fluid px-2 px-md-4 mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script>
+        // Dark mode functionality
+        const toggle = document.getElementById('darkModeToggle');
+        const icon = document.getElementById('darkModeIcon');
+
+        function setDarkMode(enabled) {
+            document.body.classList.toggle('dark-mode', enabled);
+            icon.className = enabled ? 'bi bi-brightness-high' : 'bi bi-moon';
+            localStorage.setItem('darkMode', enabled ? '1' : '0');
+        }
+
+        // Initialize & toggle dark mode
+        let darkMode = localStorage.getItem('darkMode') !== '0';  // Default to dark mode
+        setDarkMode(darkMode);
+        toggle.addEventListener('click', () => setDarkMode(!document.body.classList.contains('dark-mode')));
+
+        const searchInput = document.getElementById('searchInput');
+        const mobileSearchInput = document.getElementById('mobileSearchInput');
+        let searchTimeout = null;        function handleSearch(query) {
+            const params = new URLSearchParams(window.location.search);
+            const activeElement = document.activeElement;
+            const isMobileSearch = activeElement === mobileSearchInput;
+            const isDesktopSearch = activeElement === searchInput;
+            const hasSearchFocus = isMobileSearch || isDesktopSearch;
+            const isOnStats = window.location.pathname.includes('stats');
+
+            if (query || hasSearchFocus) {
+                params.set('focus', isMobileSearch ? 'mobile' : 'desktop');
+                if (query) {
+                    params.set('q', query);
+                    // If we have a search query, always go to home page
+                    window.location.href = "{% url 'home' %}" + '?' + params.toString();
+                    return;
+                } else {
+                    params.delete('q');
+                }
+            } else {
+                params.delete('q');
+                params.delete('focus');
+            }
+
+            if (!query && isOnStats) {
+                // If search is empty and we're on stats page, stay here
+                window.location.href = "{% url 'team_stats' %}" + (params.toString() ? '?' + params.toString() : '');
+            } else {
+                // Otherwise go/stay on home page
+                window.location.href = "{% url 'home' %}" + (params.toString() ? '?' + params.toString() : '');
+            }
+        }        function setupSearchInput(input) {
+            if (!input) return;
+
+            input.addEventListener('input', function () {
+                if (searchTimeout) clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    handleSearch(this.value);
+                }, 500);
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.blur();
+                }
+            });
+            input.addEventListener('blur', function () {
+                // Remove focus parameter when input loses focus and is empty
+                if (!this.value) {
+                    const params = new URLSearchParams(window.location.search);
+                    params.delete('focus');
+                    window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+                }
+            });
+        }
+
+        setupSearchInput(searchInput);
+        setupSearchInput(mobileSearchInput);
+
+        // Pre-fill search inputs and restore focus
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentQuery = urlParams.get('q') || '';
+        const focusedElement = urlParams.get('focus');
+
+        if (searchInput) searchInput.value = currentQuery;
+        if (mobileSearchInput) mobileSearchInput.value = currentQuery;
+
+        // Restore focus to the appropriate search box
+        if (focusedElement === 'mobile' && mobileSearchInput) {
+            mobileSearchInput.focus();
+        } else if (focusedElement === 'desktop' && searchInput) {
+            searchInput.focus();
+        }
+
+        // Position cursor at the end of the text
+        if (focusedElement) {
+            const input = focusedElement === 'mobile' ? mobileSearchInput : searchInput;
+            if (input) {
+                const len = input.value.length;
+                input.setSelectionRange(len, len);
+            }
+        }
+
+        // Add Ctrl+F shortcut to focus search
+        document.addEventListener('keydown', function (e) {
+            // Check if Ctrl+F is pressed
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault(); // Prevent browser's default find
+
+                // Determine which search box to focus based on screen size
+                const input = window.innerWidth >= 980 ? searchInput : mobileSearchInput;
+                if (input) {
+                    input.focus();
+                    // Select all text if there's any
+                    if (input.value) {
+                        input.select();
+                    }
+                }
+            }
+        });
+
+        // Add Escape key handler to remove focus from search boxes
+        function handleEscapeKey(e) {
+            if (e.key === 'Escape') {
+                this.blur();
+            }
+        }
+        
+        // Add escape key handlers to both search inputs
+        if (searchInput) searchInput.addEventListener('keydown', handleEscapeKey);
+        if (mobileSearchInput) mobileSearchInput.addEventListener('keydown', handleEscapeKey);
+    </script>
+</body>
+
+</html>

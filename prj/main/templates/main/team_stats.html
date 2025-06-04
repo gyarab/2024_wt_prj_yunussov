@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<h1 class="mb-4">League Table</h1>
+<div class="table-responsive">
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Team</th>
+            <th scope="col">MP</th>
+            <th scope="col">W</th>
+            <th scope="col">D</th>
+            <th scope="col">L</th>
+            <th scope="col">GF</th>
+            <th scope="col">GA</th>
+            <th scope="col">GD</th>
+            <th scope="col">Pts</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in stats %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ row.team.name }}</td>
+            <td>{{ row.played }}</td>
+            <td>{{ row.wins }}</td>
+            <td>{{ row.draws }}</td>
+            <td>{{ row.losses }}</td>
+            <td>{{ row.goals_for }}</td>
+            <td>{{ row.goals_against }}</td>
+            <td>{% if row.goal_diff > 0 %}+{% endif %}{{ row.goal_diff }}</td>
+            <td><strong>{{ row.points }}</strong></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
