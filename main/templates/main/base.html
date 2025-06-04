@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <meta name="color-scheme" content="dark light">
     <script>
-        (function() {
+        (function () {
             try {
                 var darkPref = localStorage.getItem('darkMode');
                 if (darkPref === null) {
@@ -20,45 +20,106 @@
                     document.documentElement.classList.add('dark-mode');
                     document.body.classList.add('dark-mode');
                 }
-            } catch (e) {}
+            } catch (e) { }
         })();
     </script>
     <style>
+        /* Light mode */
         body {
-            background-color: #fff !important;
-            color: #212529 !important;
+            background-color: #f8f9fa;
+            color: #212529;
             transition: background-color 0.4s, color 0.4s;
         }
 
+        body:not(.dark-mode) .table {
+            color: #212529;
+            background-color: #fff;
+        }
+
+        body:not(.dark-mode) .table-light {
+            background-color: #f8f9fa;
+        }
+
+        /* Dark mode overrides */
         body.dark-mode {
-            background-color: #181a1b !important;
-            color: #e0e0e0 !important;
+            background-color: #181a1b;
+            color: #e0e0e0;
+        }       
+         /* Dark mode - components */
+        .dark-mode .navbar,
+        .dark-mode .navbar-light,
+        .dark-mode .card {
+            background-color: #23272b !important;
+            color: #e0e0e0;
         }
-
-        html.dark-mode .navbar,
-        html.dark-mode .navbar-light {
+        
+        .dark-mode .form-control {
+            background-color: #2c3238 !important;
+            color: #e0e0e0;
+        }
+        
+        /* Dark mode - mobile search container */
+        .dark-mode .d-lg-none.bg-light {
             background-color: #23272b !important;
         }
 
-        html.dark-mode .d-lg-none.bg-light,
-        html.dark-mode .navbar-light.bg-light {
-            background-color: #23272b !important;
+        .dark-mode .navbar .nav-link,
+        .dark-mode .navbar .navbar-brand {
+            color: #e0e0e0;
         }
 
-        html.dark-mode body,
-        html.dark-mode .card,
-        html.dark-mode .container-fluid,
-        html.dark-mode .container,
-        html.dark-mode .row,
-        html.dark-mode .col,
-        html.dark-mode .col-12 {
-            background-color: #181a1b !important;
-            color: #e0e0e0 !important;
+        .dark-mode .navbar-brand img {
+            filter: brightness(0) invert(1);
         }
 
-        html.dark-mode .card {
-            background-color: #23272b !important;
-            color: #e0e0e0 !important;
+        .dark-mode .btn-outline-primary,
+        .dark-mode .btn-outline-success,
+        .dark-mode .btn-outline-secondary {
+            color: #e0e0e0;
+            border-color: #e0e0e0;
+        }
+
+        .dark-mode .form-control {
+            border-color: #444;
+        }
+
+        .dark-mode .table {
+            color: #e0e0e0;
+            background-color: #181a1b;
+        }
+
+        /* Utility classes */
+        .navbar-toggler.custom-toggler {
+            border: 1.5px solid #212529;
+            border-radius: 0.4rem;
+            height: 38px;
+        }
+
+        .dark-mode .navbar-toggler.custom-toggler {
+            border-color: #e0e0e0 !important;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .navbar-toggler-icon {
+            filter: brightness(0) invert(1);
+        }
+
+        @media (max-width: 540px) {
+            .navbar .container,
+            .container-fluid {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+        }
+
+        @media (min-width: 960px) {
+            .navbar-toggler.d-lg-none {
+                display: none !important;
+            }
+
+            #darkModeToggle {
+                position: static !important;
+            }
         }
     </style>
 </head>
@@ -66,7 +127,8 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light position-relative">
         <div class="container-fluid px-2 px-md-3" style="justify-content: flex-start;">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}" style="margin-right: 1.2rem;">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}"
+                style="margin-right: 1.2rem;">
                 <img src="{% static 'main/football.svg' %}" alt="Logo" style="height:32px;vertical-align:middle;"> <span
                     style="font-weight: 600;">FootStats</span>
             </a>
@@ -83,29 +145,25 @@
                     aria-label="Toggle navigation" style="height: 38px; border-width: 1.5px; border-color: #6c757d;">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </div>            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ps-3">
                     <li class="nav-item"><a class="nav-link" href="{%url 'home'%}">Matches</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'team_stats' %}">Stats</a></li>
                     <li class="nav-item"><a class="nav-link" href="{%url 'teams_list'%}">Teams</a></li>
                 </ul>
-                <div class="d-none d-lg-flex flex-grow-1 align-items-center gap-2 ms-lg-2">
-                    <form class="d-flex flex-grow-1" role="search" id="searchForm" action="/" method="get"
-                        autocomplete="off">
+                <div class="d-none d-lg-flex flex-grow-1 align-items-center gap-2 ms-lg-2">                    <form class="d-flex flex-grow-1" role="search" id="searchForm" onsubmit="event.preventDefault();">
                         <input class="form-control me-2 flex-grow-1" id="searchInput" name="q" type="search"
-                            placeholder="Search teams or matches" aria-label="Search" value=""
-                            style="min-width: 180px; max-width: 320px;">
+                            placeholder="Search teams or matches" aria-label="Search"
+                            value="{{ search_query|default:'' }}" style="min-width: 180px; max-width: 320px;">
                     </form>
                 </div>
             </div>
         </div>
     </nav>
     <!-- Mobile search bar, always visible -->
-    <div class="d-lg-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">
-        <form class="d-flex" role="search" id="mobileSearchForm" action="/" method="get" autocomplete="off">
+    <div class="d-lg-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">        <form class="d-flex" role="search" id="mobileSearchForm" onsubmit="event.preventDefault();">
             <input class="form-control me-2 flex-grow-1" id="mobileSearchInput" name="q" type="search"
-                placeholder="Search teams or matches" aria-label="Search" value="">
+                placeholder="Search teams or matches" aria-label="Search" value="{{ search_query|default:'' }}">
         </form>
     </div>
 
@@ -116,243 +174,133 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        body {
-            transition: background-color 0.4s, color 0.4s;
-            background-color: #fff !important;
-            color: #212529 !important;
-        }
-
-        body.dark-mode {
-            background-color: #181a1b !important;
-            color: #e0e0e0 !important;
-        }
-
-        body.dark-mode .navbar,
-        body.dark-mode .navbar-light {
-            background-color: #23272b !important;
-        }
-
-        body.dark-mode .navbar .navbar-brand,
-        body.dark-mode .navbar .nav-link,
-        body.dark-mode .navbar .btn,
-        body.dark-mode .navbar .btn-outline-dark,
-        body.dark-mode .navbar .btn-outline-dark:focus,
-        body.dark-mode .navbar .btn-outline-dark:active {
-            color: #e0e0e0 !important;
-            border-color: #e0e0e0 !important;
-        }
-
-        body.dark-mode .navbar .nav-link.active,
-        body.dark-mode .navbar .nav-link:focus,
-        body.dark-mode .navbar .nav-link:hover {
-            color: #fff !important;
-        }
-
-        body.dark-mode .navbar .btn-outline-dark {
-            background-color: #23272b !important;
-        }
-
-        body.dark-mode .card {
-            background-color: #23272b !important;
-            color: #e0e0e0 !important;
-        }
-
-        body.dark-mode .table {
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .btn-outline-primary,
-        body.dark-mode .btn-outline-success,
-        body.dark-mode .btn-outline-secondary {
-            color: #e0e0e0;
-            border-color: #e0e0e0;
-        }
-
-        body.dark-mode .form-control {
-            background-color: #23272b;
-            color: #e0e0e0;
-            border-color: #444;
-        }
-
-        body.dark-mode .navbar-toggler {
-            filter: invert(1) grayscale(1) brightness(2);
-            border: 1.5px solid #e0e0e0 !important;
-            height: 38px;
-        }
-
-        .navbar-toggler.custom-toggler {
-            border: 1.5px solid #6c757d !important;
-            border-radius: 0.4rem;
-            height: 38px;
-        }
-
-        @media (max-width: 540px) {
-
-            .navbar .container,
-            .container-fluid {
-                padding-left: 0.5rem !important;
-                padding-right: 0.5rem !important;
-            }
-
-            .navbar .form-control {
-                min-width: 0 !important;
-                font-size: 1rem;
-            }
-
-            .navbar .btn {
-                font-size: 1rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .container-fluid.mt-4 {
-                padding-left: 0.5rem !important;
-                padding-right: 0.5rem !important;
-            }
-        }
-
-        @media (min-width: 960px) {
-
-            /* Hide hamburger on large screens, keep dark toggle visible and right-aligned */
-            .navbar-toggler.d-lg-none {
-                display: none !important;
-            }
-
-            #darkModeToggle {
-                position: static !important;
-            }
-        }
-
-        /* Only change the white background around the search box in dark mode */
-        body.dark-mode .d-lg-none.bg-light,
-        body.dark-mode .navbar-light.bg-light {
-            background-color: #23272b !important;
-        }
-
-        /* Add top margin to Teams title (h1, h2, h3) when it's the first heading after the search bar */
-        .container-fluid h1,
-        .container-fluid h2,
-        .container-fluid h3 {
-            margin-top: 1rem;
-        }
-
-        /* But if it's the very first child, don't add extra margin */
-        .container-fluid>:first-child h1,
-        .container-fluid>:first-child h2,
-        .container-fluid>:first-child h3 {
-            margin-top: 0;
-        }
-    </style>
     <script>
-        // Dark mode toggle with smooth transition and icon swap
+        // Dark mode functionality
         const toggle = document.getElementById('darkModeToggle');
         const icon = document.getElementById('darkModeIcon');
-        function setDarkMode(on) {
-            document.body.classList.toggle('dark-mode', on);
-            icon.className = on ? 'bi bi-brightness-high' : 'bi bi-moon';
-            localStorage.setItem('darkMode', on ? '1' : '0');
+
+        function setDarkMode(enabled) {
+            document.body.classList.toggle('dark-mode', enabled);
+            icon.className = enabled ? 'bi bi-brightness-high' : 'bi bi-moon';
+            localStorage.setItem('darkMode', enabled ? '1' : '0');
         }
-        document.addEventListener('DOMContentLoaded', function () {
-            // Make dark mode default if not set
-            let darkPref = localStorage.getItem('darkMode');
-            if (darkPref === null) {
-                darkPref = '1';
-                localStorage.setItem('darkMode', '1');
-            }
-            setDarkMode(darkPref === '1');
-            // --- SEARCH BAR LOGIC ---
-            let searchTimeout = null;
-            function triggerSearch(newQ) {
-                const params = new URLSearchParams(window.location.search);
-                if (newQ) {
-                    params.set('q', newQ);
+
+        // Initialize & toggle dark mode
+        let darkMode = localStorage.getItem('darkMode') !== '0';  // Default to dark mode
+        setDarkMode(darkMode);
+        toggle.addEventListener('click', () => setDarkMode(!document.body.classList.contains('dark-mode')));
+
+        const searchInput = document.getElementById('searchInput');
+        const mobileSearchInput = document.getElementById('mobileSearchInput');
+        let searchTimeout = null;        function handleSearch(query) {
+            const params = new URLSearchParams(window.location.search);
+            const activeElement = document.activeElement;
+            const isMobileSearch = activeElement === mobileSearchInput;
+            const isDesktopSearch = activeElement === searchInput;
+            const hasSearchFocus = isMobileSearch || isDesktopSearch;
+            const isOnStats = window.location.pathname.includes('stats');
+
+            if (query || hasSearchFocus) {
+                params.set('focus', isMobileSearch ? 'mobile' : 'desktop');
+                if (query) {
+                    params.set('q', query);
+                    // If we have a search query, always go to home page
+                    window.location.href = "{% url 'home' %}" + '?' + params.toString();
+                    return;
                 } else {
                     params.delete('q');
                 }
-                const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-                window.history.replaceState({}, '', newUrl);
-                if (searchInput) searchInput.value = newQ;
-                if (mobileSearchInput) mobileSearchInput.value = newQ;
-                filterMatchesAndTeams(newQ);
+            } else {
+                params.delete('q');
+                params.delete('focus');
             }
-            if (mobileSearchInput) {
-                mobileSearchInput.addEventListener('input', function () {
-                    if (searchTimeout) clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        triggerSearch(mobileSearchInput.value);
-                    }, 500);
-                });
-            }
-            if (searchInput) {
-                searchInput.addEventListener('input', function () {
-                    if (searchTimeout) clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        triggerSearch(searchInput.value);
-                    }, 500);
-                });
-            }
-            // Initial filter on page load
-            filterMatchesAndTeams(searchInput ? searchInput.value : (mobileSearchInput ? mobileSearchInput.value : ''));
-        });
-        toggle.addEventListener('click', function () {
-            setDarkMode(!document.body.classList.contains('dark-mode'));
-        });
 
-        // Accent-insensitive string normalization
-        function normalizeString(str) {
-            return str.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
-        }
+            if (!query && isOnStats) {
+                // If search is empty and we're on stats page, stay here
+                window.location.href = "{% url 'team_stats' %}" + (params.toString() ? '?' + params.toString() : '');
+            } else {
+                // Otherwise go/stay on home page
+                window.location.href = "{% url 'home' %}" + (params.toString() ? '?' + params.toString() : '');
+            }
+        }        function setupSearchInput(input) {
+            if (!input) return;
 
-        // Live filter for matches and teams
-        function filterMatchesAndTeams(query) {
-            query = (query || '').trim();
-            let found = false;
-            // Teams
-            document.querySelectorAll('.search-team-row').forEach(row => {
-                const text = normalizeString(row.textContent);
-                if (!query || text.includes(normalizeString(query))) {
-                    row.style.display = '';
-                    found = true;
-                } else {
-                    row.style.display = 'none';
+            input.addEventListener('input', function () {
+                if (searchTimeout) clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    handleSearch(this.value);
+                }, 500);
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.blur();
                 }
             });
-            // Matches
-            document.querySelectorAll('.search-match-card').forEach(card => {
-                const text = normalizeString(card.textContent);
-                if (!query || text.includes(normalizeString(query))) {
-                    card.style.display = '';
-                    found = true;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            // Nothing found logic
-            let nothing = document.getElementById('nothingFoundMsg');
-            if (!found && query) {
-                if (!nothing) {
-                    nothing = document.createElement('div');
-                    nothing.id = 'nothingFoundMsg';
-                    nothing.className = 'alert alert-warning text-center mt-3';
-                    nothing.innerText = 'Nothing found';
-                    document.querySelector('.container.mt-4').prepend(nothing);
-                } else {
-                    nothing.style.display = '';
-                }
-                setTimeout(() => {
-                    if (searchInput) searchInput.value = '';
-                    filterMatchesAndTeams('');
-                    if (nothing) nothing.style.display = 'none';
-                    // Remove query from URL
+            input.addEventListener('blur', function () {
+                // Remove focus parameter when input loses focus and is empty
+                if (!this.value) {
                     const params = new URLSearchParams(window.location.search);
-                    params.delete('q');
-                    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-                    window.history.replaceState({}, '', newUrl);
-                }, 1500);
-            } else if (nothing) {
-                nothing.style.display = 'none';
+                    params.delete('focus');
+                    window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+                }
+            });
+        }
+
+        setupSearchInput(searchInput);
+        setupSearchInput(mobileSearchInput);
+
+        // Pre-fill search inputs and restore focus
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentQuery = urlParams.get('q') || '';
+        const focusedElement = urlParams.get('focus');
+
+        if (searchInput) searchInput.value = currentQuery;
+        if (mobileSearchInput) mobileSearchInput.value = currentQuery;
+
+        // Restore focus to the appropriate search box
+        if (focusedElement === 'mobile' && mobileSearchInput) {
+            mobileSearchInput.focus();
+        } else if (focusedElement === 'desktop' && searchInput) {
+            searchInput.focus();
+        }
+
+        // Position cursor at the end of the text
+        if (focusedElement) {
+            const input = focusedElement === 'mobile' ? mobileSearchInput : searchInput;
+            if (input) {
+                const len = input.value.length;
+                input.setSelectionRange(len, len);
             }
         }
+
+        // Add Ctrl+F shortcut to focus search
+        document.addEventListener('keydown', function (e) {
+            // Check if Ctrl+F is pressed
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault(); // Prevent browser's default find
+
+                // Determine which search box to focus based on screen size
+                const input = window.innerWidth >= 980 ? searchInput : mobileSearchInput;
+                if (input) {
+                    input.focus();
+                    // Select all text if there's any
+                    if (input.value) {
+                        input.select();
+                    }
+                }
+            }
+        });
+
+        // Add Escape key handler to remove focus from search boxes
+        function handleEscapeKey(e) {
+            if (e.key === 'Escape') {
+                this.blur();
+            }
+        }
+        
+        // Add escape key handlers to both search inputs
+        if (searchInput) searchInput.addEventListener('keydown', handleEscapeKey);
+        if (mobileSearchInput) mobileSearchInput.addEventListener('keydown', handleEscapeKey);
     </script>
 </body>
 

@@ -1,18 +1,44 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h1>{{ h1_title }}</h1>
+
+{% if search_teams %}
+<h3 class="mt-4">Teams</h3>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">    {% for team in search_teams %}    <div class="col">
+        <div class="card h-100 bg-light shadow-sm" style="border-color: #D4C4A8;">
+            <div class="card-body">
+                <h5 class="card-title mb-0">{{ team.name }} <small class="text-muted">({{ team.short_name }})</small></h5>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <div class="card h-100 bg-light border-secondary shadow-sm">
+            <div class="card-body">
+                <p class="card-text mb-0 text-secondary">No teams found.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if not search_query %}
+<h1 class="mb-3">{{ h1_title }}</h1>
+{% endif %}
 
 {% if todays_matches %}
 <h3>Today's Matches</h3>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
     {% for match in todays_matches %}
     <div class="col search-match-card">
         <div class="card h-100 bg-light border-primary shadow-sm">
-            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2" style="min-height: 120px;">
+            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
+                style="min-height: 120px;">
                 {% if match.stats and match.stats.extra_time %}
                 <div class="mb-2">
-                    <span class="badge fw-bold" style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+                    <span class="badge fw-bold"
+                        style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
                 </div>
                 {% else %}
                 <div class="mb-2" style="height: 0.7em;"></div>
@@ -37,14 +63,16 @@
 
 {% if future_matches %}
 <h3>Future Matches</h3>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
     {% for match in future_matches %}
     <div class="col search-match-card">
         <div class="card h-100 bg-light border-success shadow-sm">
-            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2" style="min-height: 120px;">
+            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
+                style="min-height: 120px;">
                 {% if match.stats and match.stats.extra_time %}
                 <div class="mb-2">
-                    <span class="badge fw-bold" style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+                    <span class="badge fw-bold"
+                        style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
                 </div>
                 {% else %}
                 <div class="mb-2" style="height: 0.7em;"></div>
@@ -68,14 +96,16 @@
 {% endif %}
 
 <h3>Past Matches</h3>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
     {% for match in past_matches %}
     <div class="col search-match-card">
         <div class="card h-100 bg-light border-secondary shadow-sm">
-            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2" style="min-height: 120px;">
+            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
+                style="min-height: 120px;">
                 {% if match.stats and match.stats.extra_time %}
                 <div class="mb-2">
-                    <span class="badge fw-bold" style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+                    <span class="badge fw-bold"
+                        style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
                 </div>
                 {% else %}
                 <div class="mb-2" style="height: 0.7em;"></div>
@@ -99,14 +129,4 @@
     {% endfor %}
 </div>
 
-{% if search_teams %}
-  <h3>Teams</h3>
-  <ul class="list-group mb-4">
-    {% for team in search_teams %}
-      <li class="list-group-item search-team-row">{{ team.name }} ({{ team.short_name }})</li>
-    {% empty %}
-      <li class="list-group-item search-team-row">No teams found.</li>
-    {% endfor %}
-  </ul>
-{% endif %}
 {% endblock %}

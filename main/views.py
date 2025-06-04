@@ -62,8 +62,17 @@ def match_detail(request, match_id):
     return render(request, "main/match_detail.html", context)
 
 def teams_list(request):
+    q = request.GET.get('q', '').strip()
     teams = Team.objects.all().order_by('name')
-    return render(request, "main/teams_list.html", {"teams": teams})
+    
+    if q:
+        q_norm = strip_accents(q).lower()
+        teams = [t for t in teams if q_norm in strip_accents(t.name).lower() or q_norm in strip_accents(t.short_name).lower()]
+    
+    return render(request, "main/teams_list.html", {
+        "teams": teams,
+        "search_query": q
+    })
 
 def team_stats(request):
     from django.db.models import Q

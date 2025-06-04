@@ -2,9 +2,9 @@
 
 {% block content %}
 <h1>Teams</h1>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     {% for team in teams %}
-    <div class="col">
+    <div class="col search-team-card">
         <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
                 <h5 class="card-title">{{ team.name }}</h5>
