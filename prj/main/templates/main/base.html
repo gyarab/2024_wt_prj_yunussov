@@ -131,7 +131,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light position-relative">
+    <nav class="navbar navbar-expand-md navbar-light bg-light position-relative">
         <div class="container-fluid px-2 px-md-3" style="justify-content: flex-start;">
             <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}"
                 style="margin-right: 1.2rem;">
@@ -146,19 +146,19 @@
                     style="height: 38px; width: 42px; display: flex; align-items: center; justify-content: center;">
                     <span id="darkModeIcon" class="bi bi-moon"></span>
                 </button>
-                <button class="navbar-toggler custom-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                <button class="navbar-toggler custom-toggler d-md-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                     aria-label="Toggle navigation" style="height: 38px; border-width: 1.5px; border-color: #6c757d;">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ps-3">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0 ps-2">
                     <li class="nav-item"><a class="nav-link" href="{%url 'home'%}">Matches</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'team_stats' %}">Stats</a></li>
                     <li class="nav-item"><a class="nav-link" href="{%url 'teams_list'%}">Teams</a></li>
                 </ul>
-                <div class="d-none d-lg-flex flex-grow-1 align-items-center gap-2 ms-lg-2">
+                <div class="d-none d-md-flex flex-grow-1 align-items-center gap-2 ms-md-2">
                     <form class="d-flex flex-grow-1" role="search" id="searchForm" onsubmit="event.preventDefault();">
                         <input class="form-control me-2 flex-grow-1" id="searchInput" name="q" type="search"
                             placeholder="Search teams or matches" aria-label="Search"
@@ -168,8 +168,8 @@
             </div>
         </div>
     </nav>
-    <!-- Mobile search bar, always visible -->
-    <div class="d-lg-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">
+    <!-- Mobile search bar, only visible below md -->
+    <div class="d-md-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">
         <form class="d-flex" role="search" id="mobileSearchForm" onsubmit="event.preventDefault();">
             <input class="form-control me-2 flex-grow-1" id="mobileSearchInput" name="q" type="search"
                 placeholder="Search teams or matches" aria-label="Search" value="{{ search_query|default:'' }}">

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Match, Team
+from .models import Match, Team, Player
 from datetime import date
 try:
     from django.db.models import Q
@@ -119,3 +119,8 @@ def team_stats(request):
         })
     stats.sort(key=lambda x: (x['points'], x['goal_diff'], x['goals_for']), reverse=True)
     return render(request, 'main/team_stats.html', {'stats': stats})
+
+def team_detail(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    player_teams = team.playerteam_set.select_related('player').order_by('jersey_number')
+    return render(request, "main/team_detail.html", {"team": team, "player_teams": player_teams})

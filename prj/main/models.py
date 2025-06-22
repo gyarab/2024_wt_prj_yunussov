@@ -1,41 +1,29 @@
 from django.db import models
 
-class TeamManager(models.Manager):
-    def get_by_natural_key(self, name):
-        return self.get(name=name)
-
 class Team(models.Model):
     name = models.CharField(max_length=50, unique=True)
     short_name = models.CharField(max_length=5, unique=True)
 
-    objects = TeamManager()
-
-    def natural_key(self):
-        return (self.name,)
-
     def __str__(self):
         return self.name
-
-class PlayerManager(models.Manager):
-    def get_by_natural_key(self, name):
-        return self.get(name=name)
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
     nationality = models.CharField(max_length=50)
     birth_date = models.DateField()
-    position = models.CharField(max_length=2, choices=[
+    position = models.CharField(max_length=3, choices=[
         ('GK', 'Goalkeeper'),
-        ('DF', 'Defender'),
-        ('MF', 'Midfielder'),
-        ('FW', 'Forward'),
+        ('CB', 'Center-Back'),
+        ('LB', 'Left-Back'),
+        ('RB', 'Right-Back'),
+        ('CM', 'Central-Midfielder'),
+        ('CAM', 'Central-Attacking-Midfielder'),
+        ('CDM', 'Central-Defending-Midfielder'),
+        ('LW', 'Left-Winger'),
+        ('RW', 'Right-Winger'),
+        ('ST', 'Striker'),
     ])
     teams = models.ManyToManyField(Team, through='PlayerTeam', related_name='players')
-
-    objects = PlayerManager()
-
-    def natural_key(self):
-        return (self.name,)
 
     def __str__(self):
         return f"{self.name} ({self.get_position_display()})"
@@ -63,9 +51,6 @@ class Match(models.Model):
     class Meta:
         # A match is uniquely identified by teams and date
         unique_together = [('home_team', 'away_team', 'date')]
-
-    def natural_key(self):
-        return (self.home_team.name, self.away_team.name, self.date.isoformat())
 
     def __str__(self):
         return f"{self.home_team.name} vs {self.away_team.name}"
@@ -105,6 +90,9 @@ class MatchStats(models.Model):
     away_red_cards = models.PositiveIntegerField(default=0)
     home_fouls = models.PositiveIntegerField(default=0)
     away_fouls = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Match stats"
 
     def __str__(self):
         return f"Stats for {self.match}"

@@ -1,55 +1,805 @@
 - model: main.player
+  pk: 1
   fields:
     name: "Marcus Rashford"
     nationality: "England"
     birth_date: "1997-10-31"
-    position: "FW"
+    position: "ST"
 
 - model: main.player
+  pk: 2
   fields:
     name: "Bruno Fernandes"
     nationality: "Portugal"
     birth_date: "1994-09-08"
-    position: "MF"
+    position: "CM"
 
 - model: main.player
+  pk: 3
   fields:
     name: "Mohamed Salah"
     nationality: "Egypt"
     birth_date: "1992-06-15"
-    position: "FW"
+    position: "ST"
 
 - model: main.player
+  pk: 4
   fields:
     name: "Virgil van Dijk"
     nationality: "Netherlands"
     birth_date: "1991-07-08"
-    position: "DF"
+    position: "CB"
 
+- model: main.player
+  pk: 5
+  fields:
+    name: "Kevin De Bruyne"
+    nationality: "Belgium"
+    birth_date: "1991-06-28"
+    position: "CM"
+
+- model: main.player
+  pk: 6
+  fields:
+    name: "Erling Haaland"
+    nationality: "Norway"
+    birth_date: "2000-07-21"
+    position: "ST"
+
+- model: main.player
+  pk: 7
+  fields:
+    name: "Bukayo Saka"
+    nationality: "England"
+    birth_date: "2001-09-05"
+    position: "RW"
+
+- model: main.player
+  pk: 8
+  fields:
+    name: "Martin Ødegaard"
+    nationality: "Norway"
+    birth_date: "1998-12-17"
+    position: "CM"
+
+- model: main.player
+  pk: 9
+  fields:
+    name: "Gabriel Jesus"
+    nationality: "Brazil"
+    birth_date: "1997-04-03"
+    position: "ST"
+
+- model: main.player
+  pk: 10
+  fields:
+    name: "Aaron Ramsdale"
+    nationality: "England"
+    birth_date: "1998-05-14"
+    position: "GK"
+
+- model: main.player
+  pk: 11
+  fields:
+    name: "John Stones"
+    nationality: "England"
+    birth_date: "1994-05-28"
+    position: "CB"
+
+- model: main.player
+  pk: 12
+  fields:
+    name: "Phil Foden"
+    nationality: "England"
+    birth_date: "2000-05-28"
+    position: "LW"
+
+- model: main.player
+  pk: 13
+  fields:
+    name: "Andrew Robertson"
+    nationality: "Scotland"
+    birth_date: "1994-03-11"
+    position: "LB"
+
+- model: main.player
+  pk: 14
+  fields:
+    name: "Alisson Becker"
+    nationality: "Brazil"
+    birth_date: "1992-10-02"
+    position: "GK"
+
+- model: main.player
+  pk: 15
+  fields:
+    name: "Casemiro"
+    nationality: "Brazil"
+    birth_date: "1992-02-23"
+    position: "CDM"
+
+- model: main.player
+  pk: 16
+  fields:
+    name: "Luke Shaw"
+    nationality: "England"
+    birth_date: "1995-07-12"
+    position: "LB"
+
+- model: main.player
+  pk: 17
+  fields:
+    name: "Diogo Jota"
+    nationality: "Portugal"
+    birth_date: "1996-12-04"
+    position: "CF"
+
+- model: main.player
+  pk: 18
+  fields:
+    name: "Riyad Mahrez"
+    nationality: "Algeria"
+    birth_date: "1991-02-21"
+    position: "RW"
+
+- model: main.player
+  pk: 19
+  fields:
+    name: "Karim Benzema"
+    nationality: "France"
+    birth_date: "1987-12-19"
+    position: "ST"
+- model: main.player
+  pk: 20
+  fields:
+    name: "Luka Modric"
+    nationality: "Croatia"
+    birth_date: "1985-09-09"
+    position: "CM"
+- model: main.player
+  pk: 21
+  fields:
+    name: "Vinicius Junior"
+    nationality: "Brazil"
+    birth_date: "2000-07-12"
+    position: "LW"
+- model: main.player
+  pk: 22
+  fields:
+    name: "Thibaut Courtois"
+    nationality: "Belgium"
+    birth_date: "1992-05-11"
+    position: "GK"
+- model: main.player
+  pk: 23
+  fields:
+    name: "Robert Lewandowski"
+    nationality: "Poland"
+    birth_date: "1988-08-21"
+    position: "ST"
+- model: main.player
+  pk: 24
+  fields:
+    name: "Pedri"
+    nationality: "Spain"
+    birth_date: "2002-11-25"
+    position: "CM"
+- model: main.player
+  pk: 25
+  fields:
+    name: "Frenkie de Jong"
+    nationality: "Netherlands"
+    birth_date: "1997-05-12"
+    position: "CM"
+- model: main.player
+  pk: 26
+  fields:
+    name: "Marc-André ter Stegen"
+    nationality: "Germany"
+    birth_date: "1992-04-30"
+    position: "GK"
+- model: main.player
+  pk: 27
+  fields:
+    name: "Antoine Griezmann"
+    nationality: "France"
+    birth_date: "1991-03-21"
+    position: "CF"
+- model: main.player
+  pk: 28
+  fields:
+    name: "Jan Oblak"
+    nationality: "Slovenia"
+    birth_date: "1993-01-07"
+    position: "GK"
+- model: main.player
+  pk: 29
+  fields:
+    name: "Kylian Mbappé"
+    nationality: "France"
+    birth_date: "1998-12-20"
+    position: "ST"
+- model: main.player
+  pk: 30
+  fields:
+    name: "Lionel Messi"
+    nationality: "Argentina"
+    birth_date: "1987-06-24"
+    position: "RW"
+- model: main.player
+  pk: 31
+  fields:
+    name: "Neymar Jr."
+    nationality: "Brazil"
+    birth_date: "1992-02-05"
+    position: "LW"
+- model: main.player
+  pk: 32
+  fields:
+    name: "Gianluigi Donnarumma"
+    nationality: "Italy"
+    birth_date: "1999-02-25"
+    position: "GK"
+- model: main.player
+  pk: 33
+  fields:
+    name: "Thomas Müller"
+    nationality: "Germany"
+    birth_date: "1989-09-13"
+    position: "AM"
+- model: main.player
+  pk: 34
+  fields:
+    name: "Joshua Kimmich"
+    nationality: "Germany"
+    birth_date: "1995-02-08"
+    position: "CM"
+- model: main.player
+  pk: 35
+  fields:
+    name: "Manuel Neuer"
+    nationality: "Germany"
+    birth_date: "1986-03-27"
+    position: "GK"
+- model: main.player
+  pk: 36
+  fields:
+    name: "Jude Bellingham"
+    nationality: "England"
+    birth_date: "2003-06-29"
+    position: "CM"
+- model: main.player
+  pk: 37
+  fields:
+    name: "Marco Reus"
+    nationality: "Germany"
+    birth_date: "1989-05-31"
+    position: "AM"
+- model: main.player
+  pk: 38
+  fields:
+    name: "Gregor Kobel"
+    nationality: "Switzerland"
+    birth_date: "1997-12-06"
+    position: "GK"
+- model: main.player
+  pk: 39
+  fields:
+    name: "Dusan Vlahovic"
+    nationality: "Serbia"
+    birth_date: "2000-01-28"
+    position: "ST"
+- model: main.player
+  pk: 40
+  fields:
+    name: "Federico Chiesa"
+    nationality: "Italy"
+    birth_date: "1997-10-25"
+    position: "RW"
+- model: main.player
+  pk: 41
+  fields:
+    name: "Wojciech Szczesny"
+    nationality: "Poland"
+    birth_date: "1990-04-18"
+    position: "GK"
+- model: main.player
+  pk: 42
+  fields:
+    name: "Lautaro Martinez"
+    nationality: "Argentina"
+    birth_date: "1997-08-22"
+    position: "ST"
+- model: main.player
+  pk: 43
+  fields:
+    name: "Nicolo Barella"
+    nationality: "Italy"
+    birth_date: "1997-02-07"
+    position: "CM"
+- model: main.player
+  pk: 44
+  fields:
+    name: "Andre Onana"
+    nationality: "Cameroon"
+    birth_date: "1996-04-02"
+    position: "GK"
+- model: main.player
+  pk: 45
+  fields:
+    name: "Olivier Giroud"
+    nationality: "France"
+    birth_date: "1986-09-30"
+    position: "ST"
+- model: main.player
+  pk: 46
+  fields:
+    name: "Rafael Leão"
+    nationality: "Portugal"
+    birth_date: "1999-06-10"
+    position: "LW"
+
+- model: main.player
+  pk: 47
+  fields:
+    name: "Mike Maignan"
+    nationality: "France"
+    birth_date: "1995-07-03"
+    position: "GK"
+
+- model: main.player
+  pk: 48
+  fields:
+    name: "Erling Haaland"
+    nationality: "Norway"
+    birth_date: "2000-07-21"
+    position: "ST"
+
+- model: main.player
+  pk: 49
+  fields:
+    name: "Harry Kane"
+    nationality: "England"
+    birth_date: "1993-07-28"
+    position: "ST"
+
+- model: main.player
+  pk: 50
+  fields:
+    name: "Heung-min Son"
+    nationality: "South Korea"
+    birth_date: "1992-07-08"
+    position: "LW"
+
+- model: main.player
+  pk: 51
+  fields:
+    name: "Hugo Lloris"
+    nationality: "France"
+    birth_date: "1986-12-26"
+    position: "GK"
+
+- model: main.player
+  pk: 52
+  fields:
+    name: "Steven Bergwijn"
+    nationality: "Netherlands"
+    birth_date: "1997-10-08"
+    position: "RW"
+
+# Team 1 (Manchester United): Rashford, Fernandes, Casemiro, Luke Shaw, Ramsdale
 - model: main.playerteam
   fields:
-    player: ["Marcus Rashford"]
-    team: ["Manchester United"]
+    player: 1
+    team: 1
     joined_date: "2015-07-01"
     jersey_number: 10
 
 - model: main.playerteam
   fields:
-    player: ["Bruno Fernandes"]
-    team: ["Manchester United"]
+    player: 2
+    team: 1
     joined_date: "2020-01-30"
     jersey_number: 8
 
 - model: main.playerteam
   fields:
-    player: ["Mohamed Salah"]
-    team: ["Liverpool"]
+    player: 15
+    team: 1
+    joined_date: "2022-08-01"
+    jersey_number: 18
+
+- model: main.playerteam
+  fields:
+    player: 16
+    team: 1
+    joined_date: "2014-06-27"
+    jersey_number: 23
+
+- model: main.playerteam
+  fields:
+    player: 10
+    team: 1
+    joined_date: "2021-08-20"
+    jersey_number: 1
+
+# Team 2 (Liverpool): Salah, van Dijk, Robertson, Alisson, Jota
+- model: main.playerteam
+  fields:
+    player: 3
+    team: 2
     joined_date: "2017-07-01"
     jersey_number: 11
 
 - model: main.playerteam
   fields:
-    player: ["Virgil van Dijk"]
-    team: ["Liverpool"]
+    player: 4
+    team: 2
     joined_date: "2018-01-01"
     jersey_number: 4
+
+- model: main.playerteam
+  fields:
+    player: 13
+    team: 2
+    joined_date: "2017-07-21"
+    jersey_number: 26
+
+- model: main.playerteam
+  fields:
+    player: 14
+    team: 2
+    joined_date: "2018-07-19"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 17
+    team: 2
+    joined_date: "2020-09-19"
+    jersey_number: 20
+
+# Team 3 (Man City): De Bruyne, Haaland, Stones, Foden, Mahrez
+- model: main.playerteam
+  fields:
+    player: 5
+    team: 3
+    joined_date: "2015-08-30"
+    jersey_number: 17
+
+- model: main.playerteam
+  fields:
+    player: 6
+    team: 3
+    joined_date: "2022-07-01"
+    jersey_number: 9
+
+- model: main.playerteam
+  fields:
+    player: 11
+    team: 3
+    joined_date: "2016-08-18"
+    jersey_number: 5
+
+- model: main.playerteam
+  fields:
+    player: 12
+    team: 3
+    joined_date: "2017-07-01"
+    jersey_number: 47
+
+- model: main.playerteam
+  fields:
+    player: 18
+    team: 3
+    joined_date: "2018-07-10"
+    jersey_number: 26
+
+# Team 4 (Arsenal): Saka, Ødegaard, Gabriel Jesus, Ramsdale
+- model: main.playerteam
+  fields:
+    player: 7
+    team: 4
+    joined_date: "2018-11-29"
+    jersey_number: 7
+
+- model: main.playerteam
+  fields:
+    player: 8
+    team: 4
+    joined_date: "2021-01-27"
+    jersey_number: 8
+
+- model: main.playerteam
+  fields:
+    player: 9
+    team: 4
+    joined_date: "2021-07-01"
+    jersey_number: 9
+
+- model: main.playerteam
+  fields:
+    player: 10
+    team: 4
+    joined_date: "2021-08-20"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 19
+    team: 5
+    joined_date: "2010-07-01"
+    jersey_number: 9
+
+- model: main.playerteam
+  fields:
+    player: 20
+    team: 5
+    joined_date: "2012-08-27"
+    jersey_number: 10
+
+- model: main.playerteam
+  fields:
+    player: 21
+    team: 5
+    joined_date: "2018-07-12"
+    jersey_number: 20
+
+- model: main.playerteam
+  fields:
+    player: 22
+    team: 5
+    joined_date: "2018-07-16"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 23
+    team: 6
+    joined_date: "2022-07-01"
+    jersey_number: 9
+
+- model: main.playerteam
+  fields:
+    player: 24
+    team: 6
+    joined_date: "2020-09-01"
+    jersey_number: 8
+
+- model: main.playerteam
+  fields:
+    player: 25
+    team: 6
+    joined_date: "2019-07-01"
+    jersey_number: 21
+
+- model: main.playerteam
+  fields:
+    player: 26
+    team: 6
+    joined_date: "2014-07-01"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 27
+    team: 7
+    joined_date: "2014-07-01"
+    jersey_number: 7
+
+- model: main.playerteam
+  fields:
+    player: 28
+    team: 7
+    joined_date: "2014-07-01"
+    jersey_number: 13
+
+- model: main.playerteam
+  fields:
+    player: 11
+    team: 7
+    joined_date: "2016-08-18"
+    jersey_number: 5
+
+- model: main.playerteam
+  fields:
+    player: 12
+    team: 7
+    joined_date: "2017-07-01"
+    jersey_number: 47
+
+- model: main.playerteam
+  fields:
+    player: 29
+    team: 8
+    joined_date: "2017-07-01"
+    jersey_number: 7
+
+- model: main.playerteam
+  fields:
+    player: 30
+    team: 8
+    joined_date: "2021-08-10"
+    jersey_number: 30
+
+- model: main.playerteam
+  fields:
+    player: 31
+    team: 8
+    joined_date: "2017-07-01"
+    jersey_number: 10
+
+- model: main.playerteam
+  fields:
+    player: 32
+    team: 8
+    joined_date: "2021-07-01"
+    jersey_number: 99
+
+- model: main.playerteam
+  fields:
+    player: 33
+    team: 9
+    joined_date: "2009-08-15"
+    jersey_number: 25
+
+- model: main.playerteam
+  fields:
+    player: 34
+    team: 9
+    joined_date: "2015-08-01"
+    jersey_number: 6
+
+- model: main.playerteam
+  fields:
+    player: 35
+    team: 9
+    joined_date: "2011-07-01"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 36
+    team: 10
+    joined_date: "2023-07-01"
+    jersey_number: 22
+
+- model: main.playerteam
+  fields:
+    player: 37
+    team: 10
+    joined_date: "2012-07-01"
+    jersey_number: 11
+
+- model: main.playerteam
+  fields:
+    player: 38
+    team: 10
+    joined_date: "2021-07-01"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 39
+    team: 11
+    joined_date: "2022-01-01"
+    jersey_number: 9
+
+- model: main.playerteam
+  fields:
+    player: 40
+    team: 11
+    joined_date: "2020-09-01"
+    jersey_number: 7
+
+- model: main.playerteam
+  fields:
+    player: 41
+    team: 11
+    joined_date: "2017-07-01"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 42
+    team: 12
+    joined_date: "2018-07-01"
+    jersey_number: 10
+
+- model: main.playerteam
+  fields:
+    player: 43
+    team: 12
+    joined_date: "2019-07-01"
+    jersey_number: 23
+
+- model: main.playerteam
+  fields:
+    player: 44
+    team: 12
+    joined_date: "2023-07-01"
+    jersey_number: 24
+
+- model: main.playerteam
+  fields:
+    player: 45
+    team: 13
+    joined_date: "2021-07-01"
+    jersey_number: 9
+
+- model: main.playerteam
+  fields:
+    player: 46
+    team: 13
+    joined_date: "2021-07-01"
+    jersey_number: 17
+
+- model: main.playerteam
+  fields:
+    player: 47
+    team: 13
+    joined_date: "2021-07-01"
+    jersey_number: 16
+
+- model: main.playerteam
+  fields:
+    player: 48
+    team: 14
+    joined_date: "2022-07-01"
+    jersey_number: 9
+
+- model: main.playerteam
+  fields:
+    player: 5
+    team: 14
+    joined_date: "2015-08-30"
+    jersey_number: 17
+
+- model: main.playerteam
+  fields:
+    player: 6
+    team: 14
+    joined_date: "2022-07-01"
+    jersey_number: 10
+
+- model: main.playerteam
+  fields:
+    player: 49
+    team: 15
+    joined_date: "2014-07-01"
+    jersey_number: 10
+
+- model: main.playerteam
+  fields:
+    player: 50
+    team: 15
+    joined_date: "2015-07-01"
+    jersey_number: 7
+
+- model: main.playerteam
+  fields:
+    player: 51
+    team: 15
+    joined_date: "2012-08-01"
+    jersey_number: 1
+
+- model: main.playerteam
+  fields:
+    player: 52
+    team: 16
+    joined_date: "2021-07-01"
+    jersey_number: 7
+
+- model: main.playerteam
+  fields:
+    player: 44
+    team: 16
+    joined_date: "2017-07-01"
+    jersey_number: 24
+
+- model: main.playerteam
+  fields:
+    player: 12
+    team: 16
+    joined_date: "2017-07-01"
+    jersey_number: 47

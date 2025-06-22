@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 
-from main.views import get_homepage, match_detail, teams_list, team_stats
+from main.views import get_homepage, match_detail, teams_list, team_stats, team_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +30,5 @@ urlpatterns = [
     path('stats/', team_stats, name='team_stats'),
     path('one', TemplateView.as_view(template_name='main/home.html')),
     path('two', TemplateView.as_view(template_name='main/home.html')),
+    path('teams/<int:team_id>/', team_detail, name="team_detail"),
 ]

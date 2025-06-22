@@ -1,6 +1,16 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<style>
+    .search-match-card .card {
+        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+    .search-match-card:hover .card,
+    .search-match-card:focus-within .card {
+        transform: scale(0.98);
+        z-index: 2;
+    }
+</style>
 
 {% if search_teams %}
 <h3 class="mt-4">Teams</h3>
@@ -32,30 +42,32 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
     {% for match in todays_matches %}
     <div class="col search-match-card">
-        <div class="card h-100 bg-light border-primary shadow-sm">
-            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
-                style="min-height: 120px;">
-                {% if match.stats and match.stats.extra_time %}
-                <div class="mb-2">
-                    <span class="badge fw-bold"
-                        style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+        <a href="{% url 'match_detail' match.id %}" class="match-card-link text-decoration-none text-reset">
+            <div class="card h-100 bg-light border-primary shadow-sm">
+                <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
+                    style="min-height: 120px;">
+                    {% if match.stats and match.stats.extra_time %}
+                    <div class="mb-2">
+                        <span class="badge fw-bold"
+                            style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+                    </div>
+                    {% else %}
+                    <div class="mb-2" style="height: 0.7em;"></div>
+                    {% endif %}
+                    <h5 class="card-title mb-1">
+                        <span class="fw-bold">{{ match.home_team }}</span>
+                        <span class="mx-2">
+                            {% if match.stats %}{{ match.stats.home_score }} - {{ match.stats.away_score }}{% else %}? - ?{% endif %}
+                        </span>
+                        <span class="fw-bold">{{ match.away_team }}</span>
+                    </h5>
+                    <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
                 </div>
-                {% else %}
-                <div class="mb-2" style="height: 0.7em;"></div>
-                {% endif %}
-                <h5 class="card-title mb-1">
-                    <span class="fw-bold">{{ match.home_team }}</span>
-                    <span class="mx-2">
-                        {% if match.stats %}{{ match.stats.home_score }} - {{ match.stats.away_score }}{% else %}? - ?{% endif %}
-                    </span>
-                    <span class="fw-bold">{{ match.away_team }}</span>
-                </h5>
-                <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
+                <div class="card-footer text-center">
+                    <a href="{% url 'match_detail' match.id %}" class="btn btn-outline-primary">Details</a>
+                </div>
             </div>
-            <div class="card-footer text-center">
-                <a href="{% url 'match_detail' match.id %}" class="btn btn-outline-primary">Details</a>
-            </div>
-        </div>
+        </a>
     </div>
     {% endfor %}
 </div>
@@ -66,33 +78,44 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
     {% for match in future_matches %}
     <div class="col search-match-card">
-        <div class="card h-100 bg-light border-success shadow-sm">
-            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
-                style="min-height: 120px;">
-                {% if match.stats and match.stats.extra_time %}
-                <div class="mb-2">
-                    <span class="badge fw-bold"
-                        style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+        <a href="{% url 'match_detail' match.id %}" class="match-card-link text-decoration-none text-reset">
+            <div class="card h-100 bg-light border-success shadow-sm">
+                <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
+                    style="min-height: 120px;">
+                    {% if match.stats and match.stats.extra_time %}
+                    <div class="mb-2">
+                        <span class="badge fw-bold"
+                            style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+                    </div>
+                    {% else %}
+                    <div class="mb-2" style="height: 0.7em;"></div>
+                    {% endif %}
+                    <h5 class="card-title mb-1">
+                        <span class="fw-bold">{{ match.home_team }}</span>
+                        <span class="mx-2">
+                            {% if match.stats %}{{ match.stats.home_score }} - {{ match.stats.away_score }}{% else %}? - ?{% endif %}
+                        </span>
+                        <span class="fw-bold">{{ match.away_team }}</span>
+                    </h5>
+                    <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
                 </div>
-                {% else %}
-                <div class="mb-2" style="height: 0.7em;"></div>
-                {% endif %}
-                <h5 class="card-title mb-1">
-                    <span class="fw-bold">{{ match.home_team }}</span>
-                    <span class="mx-2">
-                        {% if match.stats %}{{ match.stats.home_score }} - {{ match.stats.away_score }}{% else %}? - ?{% endif %}
-                    </span>
-                    <span class="fw-bold">{{ match.away_team }}</span>
-                </h5>
-                <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
+                <div class="card-footer text-center">
+                    <button type="button" class="btn btn-outline-success details-btn" data-url="{% url 'match_detail' match.id %}">Details</button>
+                </div>
             </div>
-            <div class="card-footer text-center">
-                <a href="{% url 'match_detail' match.id %}" class="btn btn-outline-success">Details</a>
-            </div>
-        </div>
+        </a>
     </div>
     {% endfor %}
 </div>
+<script>
+// Make Details button work without breaking card link
+for (const btn of document.querySelectorAll('.details-btn')) {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        window.location.href = this.getAttribute('data-url');
+    });
+}
+</script>
 {% endif %}
 
 {% if past_matches %}
@@ -100,30 +123,32 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
     {% for match in past_matches %}
     <div class="col search-match-card">
-        <div class="card h-100 bg-light border-secondary shadow-sm">
-            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
-                style="min-height: 120px;">
-                {% if match.stats and match.stats.extra_time %}
-                <div class="mb-2">
-                    <span class="badge fw-bold"
-                        style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+        <a href="{% url 'match_detail' match.id %}" class="match-card-link text-decoration-none text-reset">
+            <div class="card h-100 bg-light border-secondary shadow-sm">
+                <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-2"
+                    style="min-height: 120px;">
+                    {% if match.stats and match.stats.extra_time %}
+                    <div class="mb-2">
+                        <span class="badge fw-bold"
+                            style="background-color: #ff9800; color: #fff; font-size:1rem; letter-spacing:1px; padding: 0.4em 0.8em; border-radius: 0.5em;">OT</span>
+                    </div>
+                    {% else %}
+                    <div class="mb-2" style="height: 0.7em;"></div>
+                    {% endif %}
+                    <h5 class="card-title mb-1">
+                        <span class="fw-bold">{{ match.home_team }}</span>
+                        <span class="mx-2">
+                            {% if match.stats %}{{ match.stats.home_score }} - {{ match.stats.away_score }}{% else %}? - ?{% endif %}
+                        </span>
+                        <span class="fw-bold">{{ match.away_team }}</span>
+                    </h5>
+                    <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
                 </div>
-                {% else %}
-                <div class="mb-2" style="height: 0.7em;"></div>
-                {% endif %}
-                <h5 class="card-title mb-1">
-                    <span class="fw-bold">{{ match.home_team }}</span>
-                    <span class="mx-2">
-                        {% if match.stats %}{{ match.stats.home_score }} - {{ match.stats.away_score }}{% else %}? - ?{% endif %}
-                    </span>
-                    <span class="fw-bold">{{ match.away_team }}</span>
-                </h5>
-                <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
+                <div class="card-footer text-center">
+                    <a href="{% url 'match_detail' match.id %}" class="btn btn-outline-secondary" onclick="event.stopPropagation();">Details</a>
+                </div>
             </div>
-            <div class="card-footer text-center">
-                <a href="{% url 'match_detail' match.id %}" class="btn btn-outline-secondary">Details</a>
-            </div>
-        </div>
+        </a>
     </div>
     {% endfor %}
 </div>

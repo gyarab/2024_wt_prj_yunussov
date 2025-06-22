@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>{{ team.name }} <small class="text-muted">({{ team.short_name }})</small></h1>
+<h4 class="mt-4">Players</h4>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for pt in player_teams %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title mb-1">
+                  <span class="badge bg-secondary me-2">#{{ pt.jersey_number }}</span> {{ pt.player.name }}
+                </h5>
+                <p class="card-text text-muted mb-0">{{ pt.player.get_position_display }} &nbsp;|&nbsp; {{ pt.player.nationality }}</p>
+                <p class="card-text text-muted mb-0">Born {{ pt.player.birth_date }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No players found for this team.</p>
+    {% endfor %}
+</div>
+{% endblock %}

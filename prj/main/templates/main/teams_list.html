@@ -1,16 +1,29 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<style>
+    .team-card-link .card {
+        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+
+    .team-card-link:hover .card,
+    .team-card-link:focus .card {
+        transform: scale(0.96);
+        z-index: 2;
+    }
+</style>
 <h1>Teams</h1>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     {% for team in teams %}
     <div class="col search-team-card">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body text-center">
-                <h5 class="card-title">{{ team.name }}</h5>
-                <p class="card-text text-muted">{{ team.short_name }}</p>
+        <a href="{% url 'team_detail' team.id %}" class="team-card-link text-decoration-none text-reset">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ team.name }}</h5>
+                    <p class="card-text text-muted">{{ team.short_name }}</p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     {% empty %}
     <p>No teams found.</p>

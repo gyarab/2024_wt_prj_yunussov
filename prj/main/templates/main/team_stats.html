@@ -9,15 +9,31 @@
                     margin-right: 1rem;
                 }
             }
+
             @media (min-width: 992px) {
                 .table-responsive {
                     margin-right: 2rem;
                 }
             }
+
             @media (min-width: 1400px) {
                 .table-responsive {
                     margin-right: 4rem;
                 }
+            }
+
+            .team-link-stretch {
+                border-radius: 10;
+                /* Remove border radius for full cell highlight */
+                box-shadow: none;
+            }
+
+            .team-link-stretch:hover,
+            .team-link-stretch:focus {
+                background: rgba(0, 0, 0, 0.2) !important;
+                /* More visible highlight */
+                text-decoration: underline;
+                outline: none;
             }
         </style>
         <table class="table table-borderless align-middle">
@@ -38,7 +54,13 @@
             <tbody> {% for row in stats %}
                 <tr class="py-2">
                     <th scope="row" class="text-end">{{ forloop.counter }}</th>
-                    <td>{{ row.team.name }}</td>
+                    <td>
+                        <a href="{% url 'team_detail' row.team.id %}"
+                            class="d-block px-2 py-1 text-decoration-none fw-semibold team-link-stretch"
+                            style="border-radius: 0.4em; transition: background 0.25s;">
+                            {{ row.team.name }}
+                        </a>
+                    </td>
                     <td class="text-end">{{ row.played }}</td>
                     <td class="text-end">{{ row.wins }}</td>
                     <td class="text-end">{{ row.draws }}</td>
