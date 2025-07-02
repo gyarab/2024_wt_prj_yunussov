@@ -2,13 +2,17 @@
 
 {% block content %}
 <style>
-    .search-match-card .card {
+    .search-match-card .card,
+    .clickable-team-card {
         transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
     }
     .search-match-card:hover .card,
-    .search-match-card:focus-within .card {
+    .search-match-card:focus-within .card,
+    .clickable-team-card:hover,
+    .clickable-team-card:focus-within {
         transform: scale(0.98);
         z-index: 2;
+        box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
     }
 </style>
 
@@ -24,12 +28,16 @@ for (const btn of document.querySelectorAll('.details-btn')) {
 
 {% if search_teams %}
 <h3 class="mt-4">Teams</h3>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">    {% for team in search_teams %}    <div class="col">
-        <div class="card h-100 bg-light shadow-sm" style="border-color: #D4C4A8;">
-            <div class="card-body">
-                <h5 class="card-title mb-0">{{ team.name }} <small class="text-muted">({{ team.short_name }})</small></h5>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
+    {% for team in search_teams %}
+    <div class="col">
+        <a href="{% url 'team_detail' team.id %}" class="text-decoration-none text-reset">
+            <div class="card h-100 bg-light shadow-sm clickable-team-card" style="border-color: #D4C4A8; cursor: pointer;">
+                <div class="card-body">
+                    <h5 class="card-title mb-0">{{ team.name }} <small class="text-muted">({{ team.short_name }})</small></h5>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     {% empty %}
     <div class="col">

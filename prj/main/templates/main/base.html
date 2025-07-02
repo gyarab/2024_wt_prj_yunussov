@@ -26,7 +26,7 @@
     <style>
         /* Base styles with transitions */
         body {
-            background-color: #f8f9fa;
+            background-color: #fafafa;
             color: #212529;
             transition: background-color 0.4s, color 0.4s;
         }
@@ -52,7 +52,7 @@
 
         /* Dark mode */
         html.dark-mode body {
-            background-color: #181a1b;
+            background-color: #191919;
             color: #e0e0e0;
         }
 
@@ -71,7 +71,7 @@
 
         html.dark-mode tbody tr:nth-of-type(even),
         html.dark-mode .table {
-            background-color: #181a1b !important;
+            background-color: #191919 !important;
             color: #e0e0e0;
         }
 
@@ -162,7 +162,7 @@
                     <form class="d-flex flex-grow-1" role="search" id="searchForm" onsubmit="event.preventDefault();">
                         <input class="form-control me-2 flex-grow-1" id="searchInput" name="q" type="search"
                             placeholder="Search teams or matches" aria-label="Search"
-                            value="{{ search_query|default:'' }}" style="min-width: 180px; max-width: 320px;">
+                            value="{{ search_query|default:'' }}" style="min-width: 180px; max-width: 320px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     </form>
                 </div>
             </div>
@@ -172,7 +172,7 @@
     <div class="d-md-none bg-light px-2 py-2" style="position: sticky; top: 0; z-index: 1040;">
         <form class="d-flex" role="search" id="mobileSearchForm" onsubmit="event.preventDefault();">
             <input class="form-control me-2 flex-grow-1" id="mobileSearchInput" name="q" type="search"
-                placeholder="Search teams or matches" aria-label="Search" value="{{ search_query|default:'' }}">
+                placeholder="Search teams or matches" aria-label="Search" value="{{ search_query|default:'' }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         </form>
     </div>
 
@@ -201,7 +201,8 @@
 
         const searchInput = document.getElementById('searchInput');
         const mobileSearchInput = document.getElementById('mobileSearchInput');
-        let searchTimeout = null; function handleSearch(query) {
+        let searchTimeout = null; 
+        function handleSearch(query) {
             const params = new URLSearchParams(window.location.search);
             const activeElement = document.activeElement;
             const isMobileSearch = activeElement === mobileSearchInput;
@@ -210,7 +211,7 @@
             const isOnStats = window.location.pathname.includes('stats');
 
             if (query || hasSearchFocus) {
-                params.set('focus', isMobileSearch ? 'mobile' : 'desktop');
+                // params.set('focus', isMobileSearch ? 'mobile' : 'desktop');
                 if (query) {
                     params.set('q', query);
                     // If we have a search query, always go to home page
@@ -231,21 +232,22 @@
                 // Otherwise go/stay on home page
                 window.location.href = "{% url 'home' %}" + (params.toString() ? '?' + params.toString() : '');
             }
-        } function setupSearchInput(input) {
+        }
+        function setupSearchInput(input) {
             if (!input) return;
 
-            input.addEventListener('input', function () {
-                if (searchTimeout) clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    handleSearch(this.value);
-                }, 500);
-            });
             input.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') {
+                if (e.key === 'Enter') {
+                    handleSearch(this.value);
+                } else if (e.key === 'Escape') {
                     this.blur();
                 }
             });
+            input.addEventListener('focus', function () {
+                showSearchOverlay(true);
+            });
             input.addEventListener('blur', function () {
+                showSearchOverlay(false);
                 // Remove focus parameter when input loses focus and is empty
                 if (!this.value) {
                     const params = new URLSearchParams(window.location.search);
@@ -253,6 +255,18 @@
                     window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
                 }
             });
+        }
+
+        // Overlay logic
+        function showSearchOverlay(show) {
+            let overlay = document.getElementById('searchOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'searchOverlay';
+                overlay.innerHTML = '<div class="search-instruction">Press <b>Enter</b> to search</div>';
+                document.body.appendChild(overlay);
+            }
+            overlay.style.display = show ? 'flex' : 'none';
         }
 
         setupSearchInput(searchInput);
@@ -311,6 +325,33 @@
         if (searchInput) searchInput.addEventListener('keydown', handleEscapeKey);
         if (mobileSearchInput) mobileSearchInput.addEventListener('keydown', handleEscapeKey);
     </script>
+    <style>
+        #searchOverlay {
+            display: none;
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            top: 60px; /* Height of navbar, adjust if needed */
+            background: rgba(250, 250, 250, 0.6); /* Matches #fafafa with 85% opacity */
+            /* Overlay starts below navbar for sharp nav bar */
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        html.dark-mode #searchOverlay {
+            background: rgba(25, 25, 25, 0.6); /* Matches #191919 with 85% opacity for dark mode */
+        }
+        .search-instruction {
+            background: rgba(50, 50, 50, 0.8);
+            color: #fff;
+            font-size: 1.25rem;
+            padding: 1.2rem 2.2rem;
+            border-radius: 1.2rem;
+            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.2);
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+    </style>
 </body>
 
 </html>
