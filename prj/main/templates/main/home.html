@@ -12,6 +12,16 @@
     }
 </style>
 
+<script>
+// Make Details button work without breaking card link (applies to all .details-btn)
+for (const btn of document.querySelectorAll('.details-btn')) {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        window.location.href = this.getAttribute('data-url');
+    });
+}
+</script>
+
 {% if search_teams %}
 <h3 class="mt-4">Teams</h3>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">    {% for team in search_teams %}    <div class="col">
@@ -64,7 +74,7 @@
                     <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{% url 'match_detail' match.id %}" class="btn btn-outline-primary">Details</a>
+                    <button href="{% url 'match_detail' match.id %}" class="btn btn-outline-primary">Details</button>
                 </div>
             </div>
         </a>
@@ -107,15 +117,6 @@
     </div>
     {% endfor %}
 </div>
-<script>
-// Make Details button work without breaking card link
-for (const btn of document.querySelectorAll('.details-btn')) {
-    btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        window.location.href = this.getAttribute('data-url');
-    });
-}
-</script>
 {% endif %}
 
 {% if past_matches %}
@@ -145,7 +146,7 @@ for (const btn of document.querySelectorAll('.details-btn')) {
                     <p class="card-text mb-0">{{ match.date|date:'d M Y' }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{% url 'match_detail' match.id %}" class="btn btn-outline-secondary" onclick="event.stopPropagation();">Details</a>
+                    <button type="button" class="btn btn-outline-secondary details-btn" data-url="{% url 'match_detail' match.id %}">Details</button>
                 </div>
             </div>
         </a>
